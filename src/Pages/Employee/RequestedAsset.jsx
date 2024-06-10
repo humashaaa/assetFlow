@@ -1,66 +1,39 @@
 import { useEffect, useState } from "react";
 import useAuth from "../../Hooks/useAuth";
-// import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../../useAxiosSecure/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const RequestedAsset = () => {
   const { user } = useAuth();
-  const [search, setSearch] = useState("");
-  const [searchText, setSearchText] = useState("");
-  const [filter, setFilter] = useState('')
-
-
-//   const {
-//     isPending,
-//     data,
-//     isError,
-//     error,
-//     refetch,
-//   } = useQuery({
-//     queryKey: ["jobs"],
-//     queryFn: async () => {
-//       const res = await fetch(
-//         `${import.meta.env.VITE_URL}/jobs?search=${search}`
-//       );
-//       return res.json();
-//     },
-//   });
-//   useEffect(() => {
-//     refetch();
-//   }, [search, filter, refetch]);
-
-//   if (isPending) {
-//     return (
-//       <div className="item-center justify-center">
-//         <span className="loading loading-spinner text-neutral"></span>
-//       </div>
-//     );
-//   }
-//   if (isError) return <p>{error.message}</p>;
+  const axiosSecure = useAxiosSecure()
 
 
 
 
 
+  const { data: users = [], isPending } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user/${user.email}`);
+      console.log(res.data);
 
+      return res.data;
+    },
+  });
+  console.log(users[0]);
+  const loggedInUser = users[0];
+  // assets
+  const { data: assets = [], refetch } = useQuery({
+    queryKey: ["assets"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/asset/${loggedInUser.hrEmail}`);
+      console.log(res.data);
 
-  const handleSearch = (e) => {
-    e.preventDefault();
+      return res.data;
+    },
+  });
 
-    // setSearch(searchText)
-  };
-
-  console.log(search);
-
-
-
-//   const {isPending, data, isError, error, refetch} = useQuery({
-//     queryKey: ['appliedJobs'],
-//     queryFn: async ()=>{
-//         const res = await fetch(`${import.meta.env.VITE_URL}/appliedJobs/${user?.email}?filter=${filter}`);
-//         return res.json()
-//     }
-// })
-
+console.log(assets);
 
 
 
@@ -68,54 +41,102 @@ const RequestedAsset = () => {
 
   return (
     <div>
+      <h1 className="text-3xl font-bold text-center mt-16">My Asset</h1>
       {/* search */}
       <div className=" mt-11 flex item-center justify-around">
-      <div>
-      <form onSubmit={handleSearch}>
-          <div className="flex p-1 overflow-hidden  rounded-lg    focus-within:border-blue-400 focus-within:ring-blue-300 items-center justify-center">
-            <input
-              className="px-6 border-2  py-2 text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent"
-              type="text"
-              // onChange={e => {setSearchText(e.target.value)
-              //   refetch()
-              // }
-              // }
-              // value={searchText}
-              name="search"
-              placeholder="Enter Job Title"
-              aria-label="Enter Job Title"
-            />
+     
 
-            <button className="px-1 md:px-4 py-3 text-sm font-medium tracking-wider text-gray-100 uppercase transition-colors duration-300 transform bg-blue-500 rounded-md ">
-              Search
-            </button>
+
+
+       
+
+{/* asset request */}
+
+<div className="flex flex-col mt-6 p-6">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div className="overflow-hidden border border-gray-200  md:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
+                    >
+                      <div className="flex items-center gap-x-3">
+                        <span>Asset Name</span>
+                      </div>
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
+                    >
+                      <div className="flex items-center gap-x-3">
+                        <span>Asset Type </span>
+                      </div>
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                    >
+                      <span>Request Date</span>
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                    >
+                      <span>Approval Date</span>
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                    >
+                      <span>Request Status</span>
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                    ></th>
+                  </tr>
+                </thead>
+                {/* <tbody className="bg-white divide-y divide-gray-200 ">
+                  {assets.map((asset) => (
+                    <tr key={asset._id}>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {asset.productName}
+                      </td>
+
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {asset.productType}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {asset.productQuantity}
+                      </td>
+
+                      <td className="px-4 py-4 text-sm whitespace-nowrap">
+                        <div className="flex items-center gap-x-6">
+                          <button
+                            onClick={() => {
+                            
+                            }}
+                            className="btn bg-blue-300"
+                          >
+                            Request
+                          </button>
+                         
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody> */}
+              </table>
+            </div>
           </div>
-        </form>
+        </div>
       </div>
-
-
-        {/* filter */}
-
-        <div>
-            <select
-              onChange={e => {
-                setFilter(e.target.value)
-                // refetch()
-              }}
-              value={filter}
-              name='category'
-              id='category'
-              className='border p-4 rounded-lg'
-            >
-              <option value=''>Filter By Category</option>
-              <option value='pending'>Pending</option>
-              <option value='approved'>Approved</option>
-              <option value='returnable'>Returnable</option>
-              <option value='non-returnable'>Non-returnable </option>
-            </select>
-          </div>
-
-
 
 
       </div>

@@ -1,6 +1,5 @@
-import { useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
-import {  useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Modal from "react-modal";
 import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
@@ -10,7 +9,8 @@ const MyAsset = () => {
   const [visible, setVisible] = useState(false);
   const axiosSecure = useAxiosSecure();
   const noteRef = useRef();
-
+  const [asset, setItem] = useState("");
+  console.log(asset);
   //   console.log(user);
   const { data: users = [], isPending } = useQuery({
     queryKey: ["user", user?.email],
@@ -27,51 +27,40 @@ const MyAsset = () => {
   const { data: assets = [], refetch } = useQuery({
     queryKey: ["assets"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/asset/${loggedInUser.hrEmail}`);
+      const res = await axiosSecure.get(`/asset/requestAsset/${loggedInUser.hrEmail}`);
       console.log(res.data);
 
       return res.data;
     },
   });
-
-  const handleSubmit = (asset)=>{
+console.log(asset);
+  const handleSubmit = () => {
     const addNote = noteRef.current.value;
     console.log(addNote);
+
     const info = {
       addNote,
-      requesterName : user.displayName,
-      requesterEmail : user.email,
+      requesterName: user.displayName,
+      requesterEmail: user.email,
+    };
 
+    console.log(asset);
+    // return;
+    axiosSecure.patch(`/assets/requestAsset/${asset._id}`, info).then((res) => {
+      // console.log(res.data)
+      if (res.data.modifiedCount > 0) {
+        refetch();
 
-    }
-
-console.log(asset);
-    axiosSecure.patch(`/assets/${asset._id}/requestAsset`, info)
-    .then(res =>{
-        // console.log(res.data)
-        if(res.data.modifiedCount > 0){
-            refetch();
-
-            Swal.fire({
-                position: "top-end",
-                icon: "success",
-                title: ` Your Request for ${asset.productName} successful!`,
-                showConfirmButton: false,
-                timer: 1500
-              });
-        }
-    }) 
-
-
-  }
-
-
-
-
-
-
-
-
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: ` Your Request for ${asset.productName} successful!`,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
 
   return (
     <div>
@@ -136,7 +125,10 @@ console.log(asset);
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex items-center gap-x-6">
                           <button
-                            onClick={() => setVisible(true)}
+                            onClick={() => {
+                              setVisible(true);
+                              setItem(asset);
+                            }}
                             className="btn bg-blue-300"
                           >
                             Request
@@ -151,15 +143,25 @@ console.log(asset);
                               },
                             }}
                           >
-                           <div className="flex-col justify-between">
-                           <div>
-                              <h1>Additional Notes (if any) :</h1>
-                              <input ref={noteRef} className="mt-5 w-full h-20 border-2" type="text" name="note" id="" />
+                            <div className="flex-col justify-between">
+                              <p>{asset.productName}</p>
+                              <div>
+                                <h1>Additional Notes (if any) :</h1>
+                                <input
+                                  ref={noteRef}
+                                  className="mt-5 w-full h-20 border-2"
+                                  type="text"
+                                  name="note"
+                                  id=""
+                                />
+                              </div>
+                              <button
+                                onClick={() => handleSubmit(asset)}
+                                className="bg-blue-300 p-1 flex items-center mt-3 mx-auto"
+                              >
+                                Request
+                              </button>
                             </div>
-                            <button  onClick={()=>handleSubmit(asset)} className="bg-blue-300 p-1 flex items-center mt-3 mx-auto" >
-                              Request
-                            </button>
-                           </div>
                           </Modal>
                         </div>
                       </td>
