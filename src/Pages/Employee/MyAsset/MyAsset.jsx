@@ -1,24 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
-import axios from "axios";
-import toast from "react-hot-toast";
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
-// import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
-
+import {  useState } from "react";
+import Modal from "react-modal";
+import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 const MyAsset = () => {
   const { user } = useAuth();
-  // const navigate = useNavigate();
-  // const axiosSecure = useAxiosSecure()
-  let [isOpen, setIsOpen] = useState(true);
+  const [visible, setVisible] = useState(false);
+  const axiosSecure = useAxiosSecure();
+  //   console.log(user);
+  const { data: users = [], isPending } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user/${user.email}`);
+      console.log(res.data);
 
-  const closeModal = () => {
-    setIsOpen(false);
-  };
+      return res.data;
+    },
+  });
+  console.log(users[0]);
+  const loggedInUser = users[0];
+  // assets
+  const { data: assets = [] } = useQuery({
+    queryKey: ["assets"],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/asset/${loggedInUser.hrEmail}`);
+      console.log(res.data);
 
-  const openModal = () => {
-    setIsOpen(true);
-  };
+      return res.data;
+    },
+  });
 
   return (
     <div>
@@ -26,52 +37,97 @@ const MyAsset = () => {
         Request For an Asset
       </h1>
 
-      {/* form */}
+      {/* asset request */}
 
-      <div className="flex items-center justify-center mt-20">
-        <form>
-          {/* row 1 */}
-          <div className="flex gap-6">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Product Name</span>
-              </label>
-              <input
-                type="text"
-                placeholder="Product Name"
-                name="productName"
-                className="input input-bordered"
-                required
-              />
+      <div className="flex flex-col mt-6 p-20">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+            <div className="overflow-hidden border border-gray-200  md:rounded-lg">
+              <table className="min-w-full divide-y divide-gray-200">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
+                    >
+                      <div className="flex items-center gap-x-3">
+                        <span>Product Name</span>
+                      </div>
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
+                    >
+                      <div className="flex items-center gap-x-3">
+                        <span>Product Type </span>
+                      </div>
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                    >
+                      <span> Product Quantity</span>
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                    ></th>
+                  </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200 ">
+                  {assets.map((asset) => (
+                    <tr key={asset._id}>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {asset.productName}
+                      </td>
+
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {asset.productType}
+                      </td>
+                      <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
+                        {asset.productQuantity}
+                      </td>
+
+                      <td className="px-4 py-4 text-sm whitespace-nowrap">
+                        <div className="flex items-center gap-x-6">
+                          <button
+                            onClick={() => setVisible(true)}
+                            className="btn bg-blue-300"
+                          >
+                            Request
+                          </button>
+                          <Modal
+                            isOpen={visible}
+                            onRequestClose={() => setVisible(false)}
+                            style={{
+                              content: {
+                                width: "500px",
+                                marginLeft: "500px",
+                              },
+                            }}
+                          >
+                           <div className="flex-col justify-between">
+                           <div>
+                              <h1>Additional Notes (if any) :</h1>
+                              <input className="mt-5 w-full h-20 border-2" type="text" name="" id="" />
+                            </div>
+                            <button className="bg-blue-300 p-1 flex items-center mt-3 mx-auto" >
+                              Request
+                            </button>
+                           </div>
+                          </Modal>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-
-            <select
-              name="productType"
-              id="productType"
-              className="border p-1 rounded-lg"
-            >
-              <option value="">Select Product Type</option>
-              <option value="returnable">Returnable</option>
-              <option value="non-returnable">Non-returnable</option>
-            </select>
           </div>
-          {/* 2nd row */}
-
-          <select
-            name="availability"
-            id="availability"
-            className="border p-1 rounded-lg"
-          >
-            <option value="">Availability</option>
-            <option value="available">Available</option>
-            <option value="out of stock">Out of stock</option>
-          </select>
-          <div className="form-control mt-6">
-            <button onClick={openModal} className="btn btn-primary">
-              Request
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );
