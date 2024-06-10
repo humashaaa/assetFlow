@@ -1,13 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
-import {  useState } from "react";
+import {  useRef, useState } from "react";
 import Modal from "react-modal";
 import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 const MyAsset = () => {
   const { user } = useAuth();
   const [visible, setVisible] = useState(false);
   const axiosSecure = useAxiosSecure();
+  const noteRef = useRef();
+
   //   console.log(user);
   const { data: users = [], isPending } = useQuery({
     queryKey: ["user", user?.email],
@@ -21,7 +24,7 @@ const MyAsset = () => {
   console.log(users[0]);
   const loggedInUser = users[0];
   // assets
-  const { data: assets = [] } = useQuery({
+  const { data: assets = [], refetch } = useQuery({
     queryKey: ["assets"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/asset/${loggedInUser.hrEmail}`);
@@ -30,6 +33,45 @@ const MyAsset = () => {
       return res.data;
     },
   });
+
+  const handleSubmit = (asset)=>{
+    const addNote = noteRef.current.value;
+    console.log(addNote);
+    const info = {
+      addNote,
+      requesterName : user.displayName,
+      requesterEmail : user.email,
+
+
+    }
+
+console.log(asset);
+    axiosSecure.patch(`/assets/${asset._id}/requestAsset`, info)
+    .then(res =>{
+        // console.log(res.data)
+        if(res.data.modifiedCount > 0){
+            refetch();
+
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: ` Your Request for ${asset.productName} successful!`,
+                showConfirmButton: false,
+                timer: 1500
+              });
+        }
+    }) 
+
+
+  }
+
+
+
+
+
+
+
+
 
   return (
     <div>
@@ -112,9 +154,9 @@ const MyAsset = () => {
                            <div className="flex-col justify-between">
                            <div>
                               <h1>Additional Notes (if any) :</h1>
-                              <input className="mt-5 w-full h-20 border-2" type="text" name="" id="" />
+                              <input ref={noteRef} className="mt-5 w-full h-20 border-2" type="text" name="note" id="" />
                             </div>
-                            <button className="bg-blue-300 p-1 flex items-center mt-3 mx-auto" >
+                            <button  onClick={()=>handleSubmit(asset)} className="bg-blue-300 p-1 flex items-center mt-3 mx-auto" >
                               Request
                             </button>
                            </div>

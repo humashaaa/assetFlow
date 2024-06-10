@@ -3,9 +3,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
-// import axios from "axios";
 import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
-// import { useQuery } from "@tanstack/react-query";
 
 const CheckoutForm = () => {
   const navigate = useNavigate();

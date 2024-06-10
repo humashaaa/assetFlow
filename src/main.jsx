@@ -96,11 +96,11 @@ const router = createBrowserRouter([
         loader: ({params})=> fetch(`${import.meta.env.VITE_URL}/asset-detail/${params.id}`)
       },
       {
-        path: 'myAsset',
+        path: 'requestAsset',
         element: <MyAsset></MyAsset>,
       },
       {
-        path: 'requestAsset',
+        path: 'myAsset',
         element:<RequestedAsset></RequestedAsset>,
       },
       {

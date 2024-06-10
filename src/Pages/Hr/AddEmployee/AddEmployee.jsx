@@ -13,7 +13,7 @@ const localtion = useLocation()
   const [teamCount, setTeamCount] = useState(0);
 
   const { data: employee = [], refetch } = useQuery({
-    queryKey: ["employee", user?.email],
+    queryKey: ["employee"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users`);
       console.log(res.data);
@@ -32,7 +32,7 @@ const localtion = useLocation()
         // console.log(res.data)
         if(res.data.modifiedCount > 0){
             refetch();
-            setTeamCount(teamCount + 1);
+            // setTeamCount(teamCount + 1);
 
             Swal.fire({
                 position: "top-end",
