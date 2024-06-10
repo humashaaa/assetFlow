@@ -4,23 +4,23 @@ import useAuth from "../../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
+import useAxiosSecure from "../../useAxiosSecure/useAxiosSecure";
 
 const EmployeePage = () => {
   const navigate = useNavigate();
+  const axiosSecure = useAxiosSecure()
   const { createUser, updateUser, googleSignIn } = useAuth();
   const [user, setUser]= useState(null)
-
-  // console.log(createUser);
-
-
+// console.log(role);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    const { email, password, name, employeeBirth, photo } = data;
+    const { email, password, name, birthDate, photo } = data;
     console.log(data);
     createUser(email, password).then( async(result) => {
     if(result.user){
@@ -28,14 +28,28 @@ const EmployeePage = () => {
 
 
       updateUser(name, photo).then(async() => {
-        // employee set on the database
+        // user set on the database
   
             console.log(data);
-          await  axios.post(`${import.meta.env.VITE_URL}/employee`, data).then((res) => {
+
+            const employeeData = {
+              email,
+              password,
+              name,
+              photo, 
+              birthDate,
+              role: 'employee',
+              isJoin: 'false'
+            }
+
+
+
+
+          await  axios.post(`${import.meta.env.VITE_URL}/users`, employeeData).then((res) => {
               if (res.data.insertedId) {
                 console.log("employee added");
                 toast.success("employee info updated");
-                navigate("/");
+                navigate("/dashboard");
               }
             })
             });
@@ -59,8 +73,17 @@ const EmployeePage = () => {
   const handleSocialLogin = () => {
     googleSignIn().then((result) => {
       console.log(result.user);
-      navigate("/");
+      const userInfo = {
+        email : result.user?.email,
+        name: result.user?.displayName,
+        role: 'employee'
+      }
+      axiosSecure.post(`/users`, userInfo)
+      .then(res=>{
+        console.log(res.data);
+        navigate("/dashboard");
       toast.success("Sign in Successfully");
+      })
     });
   };
 
@@ -115,12 +138,12 @@ const EmployeePage = () => {
                   </label>
                   <input
                     type="date"
-                    {...register("employeeBirth", { required: true })}
+                    {...register("birthDate", { required: true })}
                     placeholder="date of birth"
                     className="input input-bordered"
                     required
                   />
-                   {errors.employeeBirth && (
+                   {errors.birthDate && (
                 <span className="text-sm text-red-500">
                   This field is required
                 </span>

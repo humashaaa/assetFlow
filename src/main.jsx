@@ -22,6 +22,12 @@ import AddAsset from './Pages/Hr/AddAsset/AddAsset';
 import AllRequest from './Pages/Hr/AllRequest/AllRequest';
 import AddEmployee from './Pages/Hr/AddEmployee/AddEmployee';
 import EmployeeList from './Pages/Hr/EmployeeList/EmployeeList';
+import UpdateList from './Pages/Hr/AssetList/UpdateList';
+import MyAsset from './Pages/Employee/MyAsset/MyAsset';
+import HrRoute from './Shared/HrRoute';
+import MyTeam from './Pages/Employee/MyTeam/MyTeam';
+import PrivateRoute from './Shared/PrivateRoute';
+// import EmployeeRoute from './Shared/EmployeeRoute';
 
 const router = createBrowserRouter([
   {
@@ -39,7 +45,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/HRmanager',
-        element: <HrPage></HrPage>
+        element: <HrPage role="hr"></HrPage>
       },
       {
         path: '/payment',
@@ -50,37 +56,58 @@ const router = createBrowserRouter([
         element: <Login></Login>
       },
       {
-        path: '/request',
-        element: <RequestedAsset></RequestedAsset>
+        path: '/profile',
+        element: <Login></Login>
       },
+      
+     
       
     ]
   },
   // hr only
   {
     path: '/dashboard',
-    element: <Dashboard></Dashboard>,
+    element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
     children:[
+     
       {
         path: 'assetList',
-        element: <AssetList></AssetList>
+        element: <HrRoute><AssetList></AssetList></HrRoute>
       },
       {
         path: 'addAsset',
-        element: <AddAsset></AddAsset>
+        element: <HrRoute><AddAsset></AddAsset></HrRoute>
       },
       {
         path: 'allRequest',
-        element: <AllRequest></AllRequest>
+        element: <HrRoute><AllRequest></AllRequest></HrRoute>
       },
       {
         path: 'employeeList',
-        element: <EmployeeList></EmployeeList>
+        element: <HrRoute><EmployeeList></EmployeeList></HrRoute>
       },
       {
         path: 'addEmployee',
-        element: <AddEmployee></AddEmployee>
+        element: <HrRoute><AddEmployee></AddEmployee></HrRoute>
       },
+      {
+        path: 'update/:id',
+        element: <HrRoute><UpdateList></UpdateList></HrRoute>,
+        loader: ({params})=> fetch(`${import.meta.env.VITE_URL}/asset-detail/${params.id}`)
+      },
+      {
+        path: 'myAsset',
+        element: <MyAsset></MyAsset>,
+      },
+      {
+        path: 'requestAsset',
+        element:<RequestedAsset></RequestedAsset>,
+      },
+      {
+        path: 'team',
+        element: <MyTeam></MyTeam>
+      },
+      
     ]
   }
 ]);

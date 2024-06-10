@@ -4,10 +4,10 @@ import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 import toast from "react-hot-toast";
-// import useAxiosSequreCommon from "../AxiosSequreCommon/useAxiosSequreCommon";
 import useAuth from "../../Hooks/useAuth";
+import useAxiosSecure from "../../useAxiosSecure/useAxiosSecure";
 const Login = () => {
-//   const axiosSequreCommon = useAxiosSequreCommon()
+  const axiosSecure = useAxiosSecure()
   const {  user, 
     loading,
     signIn,
@@ -56,24 +56,17 @@ const Login = () => {
     googleSignIn()
     .then((result) => {
       console.log(result.user);
-      navigate("/");
-           toast.success('Sign in Successfully')
-
-    //   const inUserInfo = {
-    //     email : result.user?.email,
-    //     name: result.user?.displayName
-    //   }
-
-    //   if (result.user) {
-    //     axiosSequreCommon.post('/users', inUserInfo)
-    //     .then(res=>{
-    //       console.log(res.data);
-
-    //     })
-    //           navigate("/");
-    //                   toast.success('Sign in Successfully')
-
-    //         }
+      const userInfo = {
+        email : result.user?.email,
+        name: result.user?.displayName
+      }
+      axiosSecure.post(`/users`, userInfo)
+      .then(res=>{
+        console.log(res.data);
+        navigate("/");
+      toast.success("Sign in Successfully");
+      })
+    
 
 
 

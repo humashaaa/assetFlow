@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { axiosSecure } from "../../useAxiosSecure/useAxiosSecure";
+import CheckoutForm from "./Payment/CheckoutForm";
 
 const HrPage = () => {
   const navigate = useNavigate();
@@ -13,27 +15,40 @@ const HrPage = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
-    const { email, password, name, photo, choices, hrBirth } = data;
+    const { email, password, name, photo, price, birthDate } = data;
     console.log(data);
     createUser(email, password).then(async (result) => {
       if (result.user) {
         setUser({ ...user, photoURL: photo, displayName: name });
 
         updateUser(name, photo).then(async () => {
-          // employee set on the database
+          // user set on the database
 
           console.log(data);
+
+          const hrData = {
+            email,
+            password,
+            name,
+            photo,
+            price: parseInt(price),
+            birthDate,
+            role: "hr",
+          };
+          console.log(hrData.price);
+
           await axios
-            .post(`${import.meta.env.VITE_URL}/hrManager`, data)
+            .post(`${import.meta.env.VITE_URL}/users`, hrData)
             .then((res) => {
               if (res.data.insertedId) {
                 console.log("hrManager added");
-                toast.success("hrManager info updated");
-                navigate("/");
+                // toast.success("sign in successfully");
+                navigate("/payment", { state: { price: price } });
               }
             });
         });
@@ -56,8 +71,19 @@ const HrPage = () => {
   const handleSocialLogin = () => {
     googleSignIn().then((result) => {
       console.log(result.user);
-      navigate("/");
-      toast.success("Sign in Successfully");
+
+      const userInfo = {
+        email: result.user?.email,
+        name: result.user?.displayName,
+
+        role: "hr",
+      };
+      axiosSecure.post(`/users`, userInfo).then((res) => {
+        console.log(res.data);
+        navigate("/payment");
+        // toast.success("Sign in Successfully");
+
+      });
     });
   };
 
@@ -151,12 +177,12 @@ const HrPage = () => {
                   </label>
                   <input
                     type="date"
-                    {...register("hrBirth", { required: true })}
+                    {...register("birthDate", { required: true })}
                     placeholder="date of birth"
                     className="input input-bordered"
                     required
                   />
-                  {errors.hrBirth && (
+                  {errors.birthDate && (
                     <span className="text-sm text-red-500">
                       This field is required
                     </span>
@@ -176,19 +202,23 @@ const HrPage = () => {
                 </div>
               </div>
 
-             <div className="form-control ">
-             <label for="choices">Select Package</label>
-              <select className="border-2 p-2 rounded-xl" id="choices" {...register("choices", { required: true })}>
-                <option value="5-members">5 Members for $5</option>
-                <option value="10-members">10 Members for $8</option>
-                <option value="15-members">20 Members for $15</option>
-              </select>
-              {errors.choices && (
-                    <span className="text-sm text-red-500">
-                      This field is required
-                    </span>
-                  )}
-             </div>
+              <div className="form-control ">
+                <label for="price">Select Package</label>
+                <select
+                  className="border-2 p-2 rounded-xl"
+                  id="price"
+                  {...register("price", { required: true })}
+                >
+                  <option value="5">5 Members for $5</option>
+                  <option value="8">10 Members for $8</option>
+                  <option value="15">20 Members for $15</option>
+                </select>
+                {errors.price && (
+                  <span className="text-sm text-red-500">
+                    This field is required
+                  </span>
+                )}
+              </div>
 
               <input
                 className="btn btn-primary bg-blue-400 hover:bg-blue-500 border-none text-white text-xl"
