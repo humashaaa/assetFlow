@@ -77,9 +77,7 @@ const Login = () => {
 
   return (
     <div className="flex items-center flex-row-reverse justify-center mt-16 mb-16">
-      <Helmet>
-        <title>Log in</title>
-      </Helmet>
+      
       <div className="flex justify-center ">
 
         <div className="w-full max-w-md p-4 rounded-md shadow sm:p-8 dark:bg-gray-50 dark:text-gray-800 ">
