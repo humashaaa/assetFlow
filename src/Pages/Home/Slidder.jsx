@@ -30,7 +30,7 @@ const Slidder = () => {
             <img className='h-[40rem] w-full' src={img1} alt="" />
             <div className=' absolute top-60 left-32 text-white '>
                 <h1 className='text-4xl font-bold mb-5' >Join as Employee</h1>
-                <Link to='' className="btn rounded-2xl  p-3  border-b-2 border-b-blue-700 hover:bg-blue-400">view details</Link>
+                <Link to='/employee' className="btn rounded-2xl  p-3  border-b-2 border-b-blue-700 hover:bg-blue-400">view details</Link>
             </div>
             </div>
         </SwiperSlide>
@@ -39,7 +39,7 @@ const Slidder = () => {
             <img className='h-[40rem] w-full' src={img2} alt="" />
             <div className=' absolute top-60 left-32 text-white '>
                 <h1 className='text-4xl font-bold mb-5' >Join as HR Manager</h1>
-                <Link to='' className="btn rounded-2xl  p-3  border-b-2 border-b-blue-700 hover:bg-blue-400">view details</Link>
+                <Link to='/HRmanager' className="btn rounded-2xl  p-3  border-b-2 border-b-blue-700 hover:bg-blue-400">view details</Link>
             </div>
             </div>
         </SwiperSlide>

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import useAxiosSecure from "../../useAxiosSecure/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 
 const EmployeePage = () => {
   const navigate = useNavigate();
@@ -89,6 +90,9 @@ const EmployeePage = () => {
 
   return (
     <div>
+       <Helmet>
+        <title>Join as Employee</title>
+      </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="card shrink-0 w-full  shadow-2xl bg-base-100">

@@ -4,6 +4,7 @@ import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
 import { MdLibraryAddCheck } from "react-icons/md";
 import { IoIosRemoveCircle } from "react-icons/io";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 const AllRequest = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
@@ -57,6 +58,9 @@ const AllRequest = () => {
 
   return (
     <div>
+       <Helmet>
+        <title>All Request</title>
+      </Helmet>
       <h1 className="font-bold text-3xl text-center mt-20">All Request</h1>
 
       {/* all request */}

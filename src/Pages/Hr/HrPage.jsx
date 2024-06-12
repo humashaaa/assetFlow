@@ -6,6 +6,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import { axiosSecure } from "../../useAxiosSecure/useAxiosSecure";
 import CheckoutForm from "./Payment/CheckoutForm";
+import { Helmet } from "react-helmet-async";
 
 const HrPage = () => {
   const navigate = useNavigate();
@@ -20,7 +21,7 @@ const HrPage = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    const { email, password, name, photo, price, birthDate } = data;
+    const { email, password, name, photo, price, birthDate, companyName } = data;
     console.log(data);
     createUser(email, password).then(async (result) => {
       if (result.user) {
@@ -38,7 +39,9 @@ const HrPage = () => {
             photo,
             price: parseInt(price),
             birthDate,
+            companyName,
             role: "hr",
+            limit: price === 5?  5 : price === 8?  10 : 20
           };
           console.log(hrData.price);
 
@@ -89,6 +92,9 @@ const HrPage = () => {
 
   return (
     <div>
+       <Helmet>
+        <title>Join as HR Manager</title>
+      </Helmet>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="card shrink-0 w-full  shadow-2xl bg-base-100">

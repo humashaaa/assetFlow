@@ -2,15 +2,17 @@ import { useQuery } from "@tanstack/react-query";
 import { IoPersonAdd } from "react-icons/io5";
 import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
-import { useState } from "react";
+// import { useState } from "react";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 const AddEmployee = () => {
+
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 const localtion = useLocation()
-  const [users, setUsers] = useState([]);
-  const [teamCount, setTeamCount] = useState(0);
+  // const [users, setUsers] = useState([]);
+  // const [teamCount, setTeamCount] = useState(0);
 
   const { data: employee = [], refetch } = useQuery({
     queryKey: ["employee"],
@@ -23,11 +25,23 @@ const localtion = useLocation()
     },
 
   });
+  const { data: userss = [], isPending } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user/${user.email}`);
+      console.log(res.data);
 
+      return res.data;
+    },
+  });
+  console.log(userss[0]);
+  const loggedInUser = userss[0];
+  // console.log(employees);
+// console.log(user.companyName);
 
   const handleAdd = (emp) => {
 
-    axiosSecure.patch(`/users/${emp._id}`, user)
+    axiosSecure.patch(`/users/${emp._id}`, loggedInUser)
     .then(res =>{
         // console.log(res.data)
         if(res.data.modifiedCount > 0){
@@ -44,12 +58,21 @@ const localtion = useLocation()
         }
     }) 
   };
+  
 
   return (
-    <div className="">
+    <div >
+
+<Helmet>
+        <title>Add Employee</title>
+      </Helmet>
       <h1 className="text-3xl font-bold text-center mt-20">Add Employee</h1>
       {/* add employee */}
-      <h1 className="bg-blue-300 px-2 text-white rounded-full w-36 mx-auto mt-16">Total member {teamCount}</h1>
+<div className="flex justify-around items-center">
+<h1 className="bg-blue-300 px-2 text-white rounded-full w-36 mx-auto mt-16">Total member</h1>
+{/* <h1 className="bg-blue-300 px-2 text-white rounded-full w-36 mx-auto mt-16">{Package Limit [loggedInUser.limit]}</h1> */}
+
+  </div>      
 
       <div className="flex flex-col mt-6 px-40 ">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

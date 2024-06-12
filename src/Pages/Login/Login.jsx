@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../useAxiosSecure/useAxiosSecure";
+import { Helmet } from "react-helmet-async";
 const Login = () => {
   const axiosSecure = useAxiosSecure()
   const {  user, 
@@ -76,7 +77,11 @@ const Login = () => {
 
   return (
     <div className="flex items-center flex-row-reverse justify-center mt-16 mb-16">
+      <Helmet>
+        <title>Log in</title>
+      </Helmet>
       <div className="flex justify-center ">
+
         <div className="w-full max-w-md p-4 rounded-md shadow sm:p-8 dark:bg-gray-50 dark:text-gray-800 ">
           <h2 className="mb-3 text-3xl font-semibold text-center">
             Login to your account

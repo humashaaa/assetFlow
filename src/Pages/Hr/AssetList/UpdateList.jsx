@@ -2,6 +2,7 @@ import { useLoaderData, useNavigate } from "react-router-dom";
 import useAuth from "../../../Hooks/useAuth";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { Helmet } from "react-helmet-async";
 
 const UpdateList = () => {
 
@@ -55,6 +56,9 @@ const UpdateList = () => {
 
     return (
         <div>
+           <Helmet>
+        <title>update</title>
+      </Helmet>
             <h1 className="font-bold text-2xl text-center mt-10">Update {productName}</h1>
 
             <div className="flex items-center justify-center mt-20">

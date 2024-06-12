@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 // import axios from "axios";
 const AssetList = () => {
   const axiosSecure = useAxiosSecure();
@@ -14,14 +15,24 @@ const AssetList = () => {
   const [search, setSearch] = useState("");
   const [searchText, setSearchText] = useState("");
   const [filter, setFilter] = useState("");
+  const [sort, setSort] = useState('')
 
-const {data:lists=[], isPending, refetch} = useQuery({
+
+const {data:lists=[], refetch, isPending} = useQuery({
     queryKey: ['lists'],
     queryFn: async()=>{
-        const res = await axiosSecure.get(`/asset/${user?.email}`)
+        const res = await axiosSecure.get(`/asset/${user?.email}?filter=${filter}&sort=${sort}`)
         return res.data
     }
 })
+
+useEffect(()=>{
+  refetch()
+}, [filter, refetch, sort])
+if(isPending){
+    return <div className="item-center justify-center"><span className="loading loading-spinner text-neutral"></span></div>
+
+}
 
   //   const handleSearch = (e) => {
   //     e.preventDefault();
@@ -65,6 +76,9 @@ const {data:lists=[], isPending, refetch} = useQuery({
 
   return (
     <div className="p-10">
+       <Helmet>
+        <title>Asset List</title>
+      </Helmet>
       <div className="mt-10">
         <h1 className="text-center font-bold text-4xl ">Asset List</h1>
 
@@ -98,26 +112,46 @@ const {data:lists=[], isPending, refetch} = useQuery({
 
         {/* filter */}
 
+
+
+
+
+
         <div>
           <select
-            // onChange={(e) => {
-            //   setFilter(e.target.value);
-            //   // refetch()
-            // }}
-            // value={filter}
+            onChange={(e) => {
+              setFilter(e.target.value);
+            }}
+            value={filter}
             name="category"
             id="category"
             className="border p-4 rounded-lg"
           >
             <option value="">Filter By Category</option>
-            <option value="stock-status">Stock status</option>
-            <option value="asset-type">Asset type</option>
+            <option value="non-returnable">Stock status</option>
+            <option value="returnable">Asset type</option>
           </select>
         </div>
 
         {/* sorting */}
 
-        <h1 className="text-2xl font-bold">sorting</h1>
+        <div>
+            <select
+              onChange={e => {
+                setSort(e.target.value)
+              }}
+              value={sort}
+              name='sort'
+              id='sort'
+              className='border p-4 rounded-md'
+            >
+              <option value=''>Sort By Quantity</option>
+              <option value='dsc'>Descending Order</option>
+              <option value='asc'>Ascending Order</option>
+            </select>
+          </div>
+
+
       </div>
 
       {/* asset list */}

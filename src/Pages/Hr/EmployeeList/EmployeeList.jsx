@@ -3,6 +3,7 @@ import useAuth from "../../../Hooks/useAuth";
 import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import { Helmet } from "react-helmet-async";
 const EmployeeList = () => {
     const {user} = useAuth()
     const axiosSecure =  useAxiosSecure()
@@ -63,6 +64,9 @@ const EmployeeList = () => {
 
     return (
         <div>
+           <Helmet>
+        <title>Employee List</title>
+      </Helmet>
             <h1 className="font-bold text-3xl text-center mt-20">Employee List</h1>
             {/* employee list */}
 

@@ -2,6 +2,7 @@ import axios from "axios";
 import useAuth from "../../../Hooks/useAuth";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const AddAsset = () => {
     const {user} = useAuth()
@@ -11,6 +12,7 @@ const AddAsset = () => {
     const form = e.target;
     const productName = form.productName.value;
     const productType = form.productType.value;
+    const document = form.document.value;
     const productQuantity = parseInt(form.productQuantity.value);
     const email = user?.email;
     const assetAdded = new Date().toLocaleDateString()
@@ -19,7 +21,8 @@ const AddAsset = () => {
       productQuantity,
       productType,
       email,
-      assetAdded
+      assetAdded,
+      document
     };
   
 
@@ -39,6 +42,9 @@ const AddAsset = () => {
 
   return (
     <div className="mt-16">
+       <Helmet>
+        <title> Add Asset </title>
+      </Helmet>
       <h1 className="text-center font-bold text-4xl ">Add Asset</h1>
 
       {/* form */}
@@ -81,6 +87,18 @@ const AddAsset = () => {
               name="productQuantity"
               className="input input-bordered"
               required
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Asset Policy Docs (if any)</span>
+            </label>
+            <input
+              type="file"
+              placeholder="document"
+              name="document"
+              className="input input-bordered"
+              accept="pdf/*"
             />
           </div>
           <div className="form-control mt-6">

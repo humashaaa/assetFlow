@@ -1,7 +1,22 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../Hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
+import useAxiosSecure from "../useAxiosSecure/useAxiosSecure";
 const Nav = () => {
   const { user, logOut } = useAuth();
+  const axiosSecure = useAxiosSecure();
+  const { data: users = [], isPending } = useQuery({
+    queryKey: ["user", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/user/${user.email}`);
+      console.log(res.data);
+
+      return res.data;
+    },
+  });
+  console.log(users);
+  const loggedInUser = users[0];
+
 
   const navbar = (
     <>
@@ -36,9 +51,6 @@ const Nav = () => {
       >
         Join as HR Manager
       </NavLink>
-    
-
-      
     </>
   );
 
@@ -67,23 +79,24 @@ const Nav = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 flex items-start justify-around"
             >
-            {user? <></> : [navbar]}
+              {user ? <></> : [navbar]}
             </ul>
           </div>
-          <a className="btn btn-ghost text-2xl font-extrabold">AssetFlow</a>
+          {/* <a className="btn btn-ghost text-2xl font-extrabold">assetflow</a> */}
+          <a className="btn btn-ghost text-2xl font-extrabold"> {loggedInUser ? loggedInUser.companyName : 'AssetFlow'}</a>
+        
         </div>
         <div className="navbar-center hidden lg:flex ">
           <ul className="menu menu-horizontal px-1 flex items-center gap-10">
-            {user? <></> : [navbar]}
+            {user ? <></> : [navbar]}
           </ul>
         </div>
         <div className="navbar-end">
-          {user ? (
+          {loggedInUser ? (
             <div className="dropdown dropdown-end">
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <div className="w-11 rounded-full">
-                  <img src={user?.photoURL} />
-                 
+                  <img src={loggedInUser.photo} />
                 </div>
               </label>
               <ul
@@ -92,16 +105,19 @@ const Nav = () => {
               >
                 <li>
                   <button className="btn btn-sm font-extrabold mb-1  btn-ghost">
-                    {user?.displayName || "user name not found"}
+                    {loggedInUser.name || "user name not found"}
                   </button>
-                  </li>
-                  <li>
-                    <NavLink className='font-semibold' to='/dashboard'>Dashboard</NavLink>
-                  </li>
-                  <li>
-                    <NavLink className='font-semibold' to='/profile'>Profile</NavLink>
-                  </li>
-               
+                </li>
+                <li>
+                  <NavLink className="font-semibold" to="/dashboard">
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink className="font-semibold mb-3" to="/myProfile">
+                    Profile
+                  </NavLink>
+                </li>
 
                 <li>
                   <button
@@ -120,7 +136,7 @@ const Nav = () => {
             >
               Login
             </Link>
-          )}{" "}
+          )}
         </div>
       </div>
     </div>

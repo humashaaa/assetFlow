@@ -4,7 +4,10 @@ import Modal from "react-modal";
 import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 const MyAsset = () => {
+  const navigate = useNavigate()
   const { user } = useAuth();
   const [visible, setVisible] = useState(false);
   const axiosSecure = useAxiosSecure();
@@ -60,10 +63,14 @@ console.log(asset);
         });
       }
     });
+    navigate('/dashboard/myAsset')
   };
 
   return (
     <div>
+       <Helmet>
+        <title>Request an Asset</title>
+      </Helmet>
       <h1 className="text-3xl font-bold text-center mt-16">
         Request For an Asset
       </h1>
