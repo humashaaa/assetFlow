@@ -3,7 +3,7 @@ import useAuth from "../Hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 export const axiosSecure = axios.create({
-    baseURL : 'http://localhost:5000'
+    baseURL : 'https://assetflow-server-eta.vercel.app'
 })
 const useAxiosSecure = () => {
 

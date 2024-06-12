@@ -11,10 +11,12 @@ import { TbTruckReturn } from "react-icons/tb";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
 import toast from "react-hot-toast";
+import { usePDF } from "react-to-pdf";
 // import Action from "./Action";
 const RequestedAsset = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const { toPDF, targetRef } = usePDF({ filename: "page.pdf" });
 
   const { data: users = [], isPending } = useQuery({
     queryKey: ["user", user?.email],
@@ -90,8 +92,8 @@ const RequestedAsset = () => {
       {/* search */}
       <div className=" mt-11 flex item-center justify-around">
         {/* asset request */}
-
-        <div className="flex flex-col mt-6 p-6">
+{/* <button onClick={() => toPDF()}>download</button> */}
+        <div ref={targetRef} className="flex flex-col mt-6 p-6">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
               <div className="overflow-hidden border border-gray-200  md:rounded-lg">
@@ -189,38 +191,7 @@ const RequestedAsset = () => {
 
 export default RequestedAsset;
 
-// import { PDFViewer } from "@react-pdf/renderer";
-
 const Action = ({ status, productType, asset, handleDelete, handleReturn }) => {
-  //   const handleDelete = asset =>{
-
-  //     Swal.fire({
-  //         title: "Are you sure?",
-  //         text: "You won't be able to revert this!",
-  //         icon: "warning",
-  //         showCancelButton: true,
-  //         confirmButtonColor: "#3085d6",
-  //         cancelButtonColor: "#d33",
-  //         confirmButtonText: "Yes, remove!"
-  //       }).then((result) => {
-  //         if (result.isConfirmed) {
-
-  //             axiosSecure.patch(`/assets/cancel/${asset._id}`)
-  //             .then(res =>{
-  //                 console.log(res.data)
-  //                 if(res.data.modifiedCount > 0){
-  //                     refetch();
-  //                     // setTeamCount(teamCount + 1);
-  //                     Swal.fire({
-  //                         title: "Removed!",
-  //                         text: `${asset.productName} is Removed from Your Request List`,
-  //                         icon: "success"
-  //                       });
-  //                 }
-  //             })
-  //         }
-  //       });
-  // }
 
   if (status === "pending") {
     return (
@@ -238,11 +209,11 @@ const Action = ({ status, productType, asset, handleDelete, handleReturn }) => {
   }
   if (status === "Approved") {
     return (
-      // <PDFViewer>
-      <button>
-        <MdOutlineFileDownload />
-      </button>
-      // </PDFViewer>
+      <div>
+        <button >
+          <MdOutlineFileDownload />
+        </button>
+      </div>
     );
   }
 };
