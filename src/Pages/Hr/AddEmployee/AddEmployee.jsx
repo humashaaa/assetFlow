@@ -4,15 +4,18 @@ import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
 // import { useState } from "react";
 import Swal from "sweetalert2";
-import { useLocation } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { useState } from "react";
+import axios from "axios";
 const AddEmployee = () => {
 
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 const localtion = useLocation()
   // const [users, setUsers] = useState([]);
-  // const [teamCount, setTeamCount] = useState(0);
+  const [teamCount, setTeamCount] = useState(0);
+  const navigate = useNavigate()
 
   const { data: employee = [], refetch } = useQuery({
     queryKey: ["employee"],
@@ -38,7 +41,7 @@ const localtion = useLocation()
   const loggedInUser = userss[0];
   // console.log(employees);
 // console.log(user.companyName);
-
+const [userData] = userss
   const handleAdd = (emp) => {
 
     axiosSecure.patch(`/users/${emp._id}`, loggedInUser)
@@ -55,11 +58,34 @@ const localtion = useLocation()
                 showConfirmButton: false,
                 timer: 1500
               });
+              refetch()
         }
     }) 
   };
   
 
+  const filter = employee.filter(emp =>emp.role === 'employee' && emp.hrEmail === user.email)  
+const handleSubmit = async e =>{
+  e.preventDefault()
+  const price = e.target.price.value
+
+  const increaseData = {
+    price : parseInt(price),
+    // additionalLimit: price === 5?  5 : price === 8?  20
+  }
+
+  // await axios
+  //           .patch(`${import.meta.env.VITE_URL}/user/increaseLimit/${user.email}`, increaseData)
+  //           .then((res) => {
+  //             if (res.data.insertedId) {
+  //               console.log("package added");
+  //               navigate("/increasePayment", { state: { price: price } });
+  //             }
+  //           });
+
+
+
+}
   return (
     <div >
 
@@ -67,10 +93,29 @@ const localtion = useLocation()
         <title>Add Employee</title>
       </Helmet>
       <h1 className="text-3xl font-bold text-center mt-20">Add Employee</h1>
+      
       {/* add employee */}
 <div className="flex justify-around items-center">
-<h1 className="bg-blue-300 px-2 text-white rounded-full w-36 mx-auto mt-16">Total member</h1>
-{/* <h1 className="bg-blue-300 px-2 text-white rounded-full w-36 mx-auto mt-16">{Package Limit [loggedInUser.limit]}</h1> */}
+<h1 className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Total member {filter.length}</h1>
+<h1 className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Package Limit {userData?.limit}</h1>
+{/* <Link to='/increaseForm' className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Increase Limit</Link> */}
+<form onSubmit={handleSubmit}>
+<div className="form-control ">
+                <label for="price">Select Package</label>
+                <select
+                  className="border-2 p-2 rounded-xl"
+                  id="price"
+                  name="package"
+
+                >
+                  <option value="5">5 Members for $5</option>
+                  <option value="8">10 Members for $8</option>
+                  <option value="15">20 Members for $15</option>
+                </select>
+                
+              </div>
+              <button className="btn">Increase package</button>
+</form>
 
   </div>      
 

@@ -4,9 +4,11 @@ import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import { Helmet } from "react-helmet-async";
+import { useState } from "react";
 const EmployeeList = () => {
     const {user} = useAuth()
     const axiosSecure =  useAxiosSecure()
+    const [count, setCount] = useState('')
 
 
     const { data: employee = [], refetch } = useQuery({
@@ -46,6 +48,7 @@ const EmployeeList = () => {
                             text: `${emp.name} is Removed from Your Team `,
                             icon: "success"
                           });
+                          refetch()
         
                        
                     }
@@ -59,7 +62,7 @@ const EmployeeList = () => {
       
       };
     
-     
+   const filter = employee.filter(emp =>emp.role === 'employee' && emp.hrEmail === user.email)  
 
 
     return (
@@ -68,6 +71,7 @@ const EmployeeList = () => {
         <title>Employee List</title>
       </Helmet>
             <h1 className="font-bold text-3xl text-center mt-20">Employee List</h1>
+            <h1 className="font-medium text-xl text-center mt-5">Team Member {filter.length}</h1>
             {/* employee list */}
 
             <div className="flex flex-col mt-6 px-40 ">
@@ -101,6 +105,7 @@ const EmployeeList = () => {
                     >
                       <span>Remove </span>
                     </th>
+                   
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200 ">
@@ -125,6 +130,7 @@ const EmployeeList = () => {
                          
                         </div>
                       </td>
+                      
                     </tr>
                   ))}
                 </tbody>

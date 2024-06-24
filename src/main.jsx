@@ -27,7 +27,7 @@ import PrivateRoute from "./Shared/PrivateRoute";
 import Profile from "./Pages/Profile";
 import { HelmetProvider } from "react-helmet-async";
 // import EmployeeRoute from './Shared/EmployeeRoute';
-
+import IncreasePayment from "./Pages/Hr/Payment/IncreasePayment"
 const router = createBrowserRouter([
   {
     path: "/",
@@ -85,6 +85,7 @@ const router = createBrowserRouter([
           </HrRoute>
         ),
       },
+     
       {
         path: "allRequest",
         element: (
@@ -130,6 +131,10 @@ const router = createBrowserRouter([
       {
         path: "team",
         element: <MyTeam></MyTeam>,
+      },
+      {
+        path: "increase",
+        element: <IncreasePayment></IncreasePayment>
       },
     ],
   },

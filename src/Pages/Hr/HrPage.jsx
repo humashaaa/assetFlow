@@ -43,7 +43,7 @@ const HrPage = () => {
             role: "hr",
             limit: price === 5?  5 : price === 8?  10 : 20
           };
-          console.log(hrData.price);
+          console.log(hrData.limit);
 
           await axios
             .post(`${import.meta.env.VITE_URL}/users`, hrData)

@@ -75,6 +75,34 @@ console.log(asset);
         Request For an Asset
       </h1>
 
+        {/* search */}
+        <div className=" mt-11 flex item-center justify-around">
+          <div>
+            <form
+            //   onSubmit={handleSearch}
+            >
+              <div className="flex p-1 overflow-hidden  rounded-lg    focus-within:border-blue-400 focus-within:ring-blue-300 items-center justify-center">
+                <input
+                  className="px-6 border-2  py-2 text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent"
+                  type="text"
+                  // onChange={e => {setSearchText(e.target.value)
+                  //   refetch()
+                  // }
+                  // }
+                  // value={searchText}
+                  name="search"
+                  placeholder="Enter Job Title"
+                  aria-label="Enter Job Title"
+                />
+
+                <button className="px-1 md:px-4 py-3 text-sm font-medium tracking-wider text-gray-100 uppercase transition-colors duration-300 transform bg-blue-500 rounded-md ">
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
       {/* asset request */}
 
       <div className="flex flex-col mt-6 p-20">
@@ -106,7 +134,7 @@ console.log(asset);
                       scope="col"
                       className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
                     >
-                      <span> Product Quantity</span>
+                      <span> Availability</span>
                     </th>
 
                     <th
@@ -126,7 +154,7 @@ console.log(asset);
                         {asset.productType}
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-500  whitespace-nowrap">
-                        {asset.productQuantity}
+                        {asset.productQuantity > 0 ? 'available' : 'out of stock'}
                       </td>
 
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
@@ -137,6 +165,7 @@ console.log(asset);
                               setItem(asset);
                             }}
                             className="btn bg-blue-300"
+                            disabled = {asset.productQuantity === 0}
                           >
                             Request
                           </button>
@@ -165,6 +194,7 @@ console.log(asset);
                               <button
                                 onClick={() => handleSubmit(asset)}
                                 className="bg-blue-300 p-1 flex items-center mt-3 mx-auto"
+                                // disabled = {asset.productQuantity === 0}
                               >
                                 Request
                               </button>

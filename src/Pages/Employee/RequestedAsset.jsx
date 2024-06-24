@@ -59,7 +59,6 @@ const RequestedAsset = () => {
           console.log(res.data);
           if (res.data.modifiedCount > 0) {
             refetch();
-            // setTeamCount(teamCount + 1);
             Swal.fire({
               title: "Removed!",
               text: `${asset.productName} is Removed from Your Request List`,
@@ -90,6 +89,33 @@ const RequestedAsset = () => {
       </Helmet>
       <h1 className="text-3xl font-bold text-center mt-16">My Asset</h1>
       {/* search */}
+        {/* search */}
+        <div className=" mt-11 flex item-center justify-around">
+          <div>
+            <form
+            //   onSubmit={handleSearch}
+            >
+              <div className="flex p-1 overflow-hidden  rounded-lg    focus-within:border-blue-400 focus-within:ring-blue-300 items-center justify-center">
+                <input
+                  className="px-6 border-2  py-2 text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent"
+                  type="text"
+                  // onChange={e => {setSearchText(e.target.value)
+                  //   refetch()
+                  // }
+                  // }
+                  // value={searchText}
+                  name="search"
+                  placeholder="Enter Job Title"
+                  aria-label="Enter Job Title"
+                />
+
+                <button className="px-1 md:px-4 py-3 text-sm font-medium tracking-wider text-gray-100 uppercase transition-colors duration-300 transform bg-blue-500 rounded-md ">
+                  Search
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
       <div className=" mt-11 flex item-center justify-around">
         {/* asset request */}
 {/* <button onClick={() => toPDF()}>download</button> */}
