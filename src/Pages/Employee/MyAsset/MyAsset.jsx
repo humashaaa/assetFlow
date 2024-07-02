@@ -13,6 +13,9 @@ const MyAsset = () => {
   const axiosSecure = useAxiosSecure();
   const noteRef = useRef();
   const [asset, setItem] = useState("");
+  const [filter, setFilter] = useState('')
+  const [search, setSearch] = useState('')
+    const [searchText, setSearchText] = useState('')
   console.log(asset);
   //   console.log(user);
   const { data: users = [], isPending } = useQuery({
@@ -30,9 +33,9 @@ const MyAsset = () => {
   const { data: assets = [], refetch } = useQuery({
     queryKey: ["assets"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/asset/requestAsset/${loggedInUser.hrEmail}`);
+      const res = await axiosSecure.get(`/asset/requestAsset/${loggedInUser.hrEmail}?search=${search}`);
       console.log(res.data);
-
+// refetch()
       return res.data;
     },
   });
@@ -66,6 +69,14 @@ console.log(asset);
     navigate('/dashboard/myAsset')
   };
 
+  const handleSearch = e => {
+    e.preventDefault()
+
+    setSearch(searchText)
+  }
+
+  console.log(search)
+
   return (
     <div>
        <Helmet>
@@ -79,20 +90,20 @@ console.log(asset);
         <div className=" mt-11 flex item-center justify-around">
           <div>
             <form
-            //   onSubmit={handleSearch}
+              onSubmit={handleSearch}
             >
               <div className="flex p-1 overflow-hidden  rounded-lg    focus-within:border-blue-400 focus-within:ring-blue-300 items-center justify-center">
                 <input
                   className="px-6 border-2  py-2 text-gray-700 placeholder-gray-500 bg-white outline-none focus:placeholder-transparent"
                   type="text"
-                  // onChange={e => {setSearchText(e.target.value)
-                  //   refetch()
-                  // }
-                  // }
-                  // value={searchText}
+                  onChange={e => {setSearchText(e.target.value)
+                    refetch()
+                  }
+                  }
+                  value={searchText}
                   name="search"
-                  placeholder="Enter Job Title"
-                  aria-label="Enter Job Title"
+                  placeholder="Enter Asset Name"
+                  aria-label="Enter Asset Name"
                 />
 
                 <button className="px-1 md:px-4 py-3 text-sm font-medium tracking-wider text-gray-100 uppercase transition-colors duration-300 transform bg-blue-500 rounded-md ">
@@ -101,6 +112,24 @@ console.log(asset);
               </div>
             </form>
           </div>
+        </div>
+
+        {/* filter */}
+
+        <div>
+          <select
+            onChange={(e) => {
+              setFilter(e.target.value);
+            }}
+            value={filter}
+            name="category"
+            id="category"
+            className="border p-4 rounded-lg"
+          >
+            <option value="">Filter By Category</option>
+            <option value="non-returnable">Availability</option>
+            <option value="returnable">Asset type</option>
+          </select>
         </div>
 
       {/* asset request */}

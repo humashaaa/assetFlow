@@ -14,7 +14,7 @@ const AddEmployee = () => {
   const axiosSecure = useAxiosSecure();
 const localtion = useLocation()
   // const [users, setUsers] = useState([]);
-  const [teamCount, setTeamCount] = useState(0);
+  const [limit, setLimit] = useState('');
   const navigate = useNavigate()
 
   const { data: employee = [], refetch } = useQuery({
@@ -42,6 +42,8 @@ const localtion = useLocation()
   // console.log(employees);
 // console.log(user.companyName);
 const [userData] = userss
+let newLimit = userData.limit
+
   const handleAdd = (emp) => {
 
     axiosSecure.patch(`/users/${emp._id}`, loggedInUser)
@@ -58,9 +60,11 @@ const [userData] = userss
                 showConfirmButton: false,
                 timer: 1500
               });
+              setLimit(newLimit - 1)
               refetch()
         }
     }) 
+    console.log(newLimit);
   };
   
 
@@ -73,15 +77,6 @@ const handleSubmit = async e =>{
     price : parseInt(price),
     // additionalLimit: price === 5?  5 : price === 8?  20
   }
-
-  // await axios
-  //           .patch(`${import.meta.env.VITE_URL}/user/increaseLimit/${user.email}`, increaseData)
-  //           .then((res) => {
-  //             if (res.data.insertedId) {
-  //               console.log("package added");
-  //               navigate("/increasePayment", { state: { price: price } });
-  //             }
-  //           });
 
 
 
@@ -97,7 +92,7 @@ const handleSubmit = async e =>{
       {/* add employee */}
 <div className="flex justify-around items-center">
 <h1 className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Total member {filter.length}</h1>
-<h1 className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Package Limit {userData?.limit}</h1>
+<h1 className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Package Limit {newLimit}</h1>
 {/* <Link to='/increaseForm' className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Increase Limit</Link> */}
 <form onSubmit={handleSubmit}>
 <div className="form-control ">

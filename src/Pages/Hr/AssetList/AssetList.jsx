@@ -112,11 +112,6 @@ if(isPending){
 
         {/* filter */}
 
-
-
-
-
-
         <div>
           <select
             onChange={(e) => {

@@ -42,7 +42,6 @@ const EmployeeList = () => {
                     console.log(res.data)
                     if(res.data.modifiedCount > 0){
                         refetch();
-                        // setTeamCount(teamCount + 1);
                         Swal.fire({
                             title: "Removed!",
                             text: `${emp.name} is Removed from Your Team `,
