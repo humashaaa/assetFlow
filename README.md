@@ -1,5 +1,5 @@
 # More about AssetFlow
-*AssetFlow is a powerful asset management web application to help businesses efficiently track and manage their assets. It provides HR Managers with the tools to monitor how employees are using company resources, distinguishing between returnable assets (like laptops, keyboards, and chairs) and non-returnable assets (like pens, pencils, and paper). Our intuitive platform streamlines asset tracking, promotes accountability, and optimizes resource utilization, making it an essential solution for businesses of all sizes.
+AssetFlow is a powerful asset management web application to help businesses efficiently track and manage their assets. It provides HR Managers with the tools to monitor how employees are using company resources, distinguishing between returnable assets (like laptops, keyboards, and chairs) and non-returnable assets (like pens, pencils, and paper). Our intuitive platform streamlines asset tracking, promotes accountability, and optimizes resource utilization, making it an essential solution for businesses of all sizes.
 <!-- * Admin username : leeKnow
 * Admin password : leeKnow126a -->
 
@@ -7,7 +7,7 @@
 
 * Efficient Asset Management: The system ensures smooth workflow by providing essential office assets such as laptops, desks, and chairs, along with consumables like tissues and pens.
 * Clear Classification of Assets: Company assets are categorized into returnable (e.g., laptops, desks, chairs) and non-returnable (e.g., tissues, disposable pens, basic notebooks) for easy management.
-* Responsible Usage: Employees are encouraged to use all assets primarily for work-related activities, maintain them in good condition, and report any damages immediately.
+
 * Return Policy for Termination: Employees are required to return all assigned assets to the HR or IT department upon termination or resignation, ensuring all company assets are accounted for.
 
 
