@@ -79,7 +79,7 @@ const Nav = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 flex items-start justify-around"
             >
-              {user ? <></> : [navbar]}
+              {user ? <><p>AssetFlow</p></> : [navbar]}
             </ul>
           </div>
           {/* <a className="btn btn-ghost text-2xl font-extrabold">assetflow</a> */}

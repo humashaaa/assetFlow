@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet-async";
 import About from "./About";
 import Package from "./Package";
-import Slidder from "./Slidder";
+import Slidder from "../../Component/Slidder";
 import EmployeeHome from "./EmployeeHome";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosSecure from "../../useAxiosSecure/useAxiosSecure";
@@ -12,51 +12,51 @@ import useUserData from "../../Hooks/useUserData";
 
 const Home = () => {
   // for employee
-  const { user, logOut } = useAuth();
-  const axiosSecure = useAxiosSecure();
+  // const { user, logOut } = useAuth();
+  // const axiosSecure = useAxiosSecure();
   // const [isHr] = useHr();
 
 
-  const { data: users = [], isLoading } = useQuery({
-    queryKey: ["user", user?.email],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/user/${user.email}`);
-      console.log(res.data);
+  // const { data: users = [], isLoading } = useQuery({
+  //   queryKey: ["user", user?.email],
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get(`/user/${user.email}`);
+  //     console.log(res.data);
 
-      return res.data;
+  //     return res.data;
       
-    },
+  //   },
 
     
-  });
+  // });
 
  
-  console.log(users);
-  const loggedInUser = users[0];
-  const [userData] = users;
-  console.log(loggedInUser);
+  // console.log(users);
+  // const loggedInUser = users[0];
+  // const [userData] = users;
+  // console.log(loggedInUser);
 
-  const { data: assets = [], refetch } = useQuery({
-    queryKey: ["assets"],
-    queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/asset/requestAsset/${loggedInUser.hrEmail}`
-      );
-      console.log(res.data);
+  // const { data: assets = [], refetch } = useQuery({
+  //   queryKey: ["assets"],
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get(
+  //       `/asset/requestAsset/${loggedInUser.hrEmail}`
+  //     );
+  //     console.log(res.data);
 
-      return res.data;
-    },
-  });
+  //     return res.data;
+  //   },
+  // });
 
-  console.log(assets);
+  // console.log(assets);
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-[60vh]">
-        <span className="loading loading-bars loading-lg"></span>
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex items-center justify-center min-h-[60vh]">
+  //       <span className="loading loading-bars loading-lg"></span>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
