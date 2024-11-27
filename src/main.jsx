@@ -28,6 +28,8 @@ import Profile from "./Pages/Profile";
 import { HelmetProvider } from "react-helmet-async";
 // import EmployeeRoute from './Shared/EmployeeRoute';
 import IncreasePayment from "./Pages/Hr/Payment/IncreasePayment"
+import Contact from "./Pages/Contact/Contact";
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -37,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/contact",
+        element: <Contact></Contact>
       },
       {
         path: "/employee",

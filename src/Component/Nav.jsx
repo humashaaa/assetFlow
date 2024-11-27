@@ -30,6 +30,16 @@ const Nav = () => {
       >
         Home
       </NavLink>
+      <NavLink
+        to="/contact"
+        className={({ isActive }) =>
+          isActive
+            ? "text-red-500 text-xl font-bold"
+            : "font-bold text-xl text-blue-500"
+        }
+      >
+       Contact
+      </NavLink>
 
       <NavLink
         to="/employee"
