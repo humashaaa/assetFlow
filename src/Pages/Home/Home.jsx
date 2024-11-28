@@ -10,6 +10,7 @@ import useHr from "../../Hooks/useHr";
 import useEmployee from "../../Hooks/useEmployee";
 import useUserData from "../../Hooks/useUserData";
 import Features from "./Features";
+import TestimonialSlider from "./TestimonialSlider";
 
 const Home = () => {
   // for employee
@@ -73,6 +74,9 @@ const Home = () => {
           </div>
           <div className="text-center mt-32 mb-20">
             <Package></Package>
+          </div>
+          <div className="text-center mt-32 mb-20">
+            <TestimonialSlider></TestimonialSlider>
           </div>
 
       {/* {isHr && (
