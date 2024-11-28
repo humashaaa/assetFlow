@@ -15,7 +15,7 @@ const About = () => {
       ></Header>
 
       <div className="flex items-end justify-center px-20 mt-24 pt-24  gap-6">
-        {/* who are we */}
+        {/* together success */}
         {/* <div className="flex flex-col items-start justify-start space-y-4">
           <h1 className="font-bold text-2xl">Together success in future</h1>
 
@@ -51,7 +51,7 @@ const About = () => {
           </ul>
         </div> */}
 
-        {/* together success */}
+        {/* who are we  */}
         <div>
           <div className="flex flex-col items-start justify-start space-y-4">
             <h1 className="font-bold text-3xl">Who Are We</h1>
