@@ -14,10 +14,10 @@ const About = () => {
         }
       ></Header>
 
-      <div className="flex items-start mt-24 pt-24 justify-between gap-6">
+      <div className="flex items-end justify-center px-20 mt-24 pt-24  gap-6">
         {/* who are we */}
-        <div className="flex flex-col items-start justify-start space-y-4">
-          <h1 className="font-bold text-2xl">Who Are We</h1>
+        {/* <div className="flex flex-col items-start justify-start space-y-4">
+          <h1 className="font-bold text-2xl">Together success in future</h1>
 
           <p className="text-start w-4/5">
             Welcome to AssetFlow, the ultimate solution for businesses aiming to
@@ -49,12 +49,12 @@ const About = () => {
               policies.
             </li>
           </ul>
-        </div>
+        </div> */}
 
         {/* together success */}
         <div>
           <div className="flex flex-col items-start justify-start space-y-4">
-            <h1 className="font-bold text-2xl">Together success in future</h1>
+            <h1 className="font-bold text-3xl">Who Are We</h1>
             <p className="text-start w-4/5">
               Our mission at AssetFlow is to simplify asset tracking and
               management for businesses of all sizes. We aim to provide a
@@ -83,6 +83,11 @@ const About = () => {
               <h1 className="font-semibold">Optimized Asset Solutions</h1>
             </div>
           </div>
+        </div>
+
+        {/* image */}
+        <div>
+            <img className="w-[96rem]" src={img} alt="" />
         </div>
       </div>
     </div>

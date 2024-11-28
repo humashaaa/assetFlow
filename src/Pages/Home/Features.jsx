@@ -14,7 +14,7 @@ const Features = () => {
             ></Header>
 
             {/* features */}
-            <div className="grid grid-cols-2 gap-6 pl-36  py-28">
+            <div className="grid grid-cols-2 gap-6 pl-36  pt-28 pb-20">
                 {/* feature 1 */}
                <div className="flex gap-4 ">
                <div>

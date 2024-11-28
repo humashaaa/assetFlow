@@ -11,6 +11,7 @@ import useEmployee from "../../Hooks/useEmployee";
 import useUserData from "../../Hooks/useUserData";
 import Features from "./Features";
 import TestimonialSlider from "./TestimonialSlider";
+import Countup from "./CountUp/Countup";
 
 const Home = () => {
   // for employee
@@ -68,6 +69,9 @@ const Home = () => {
           </div>
           <div className="mt-36 text-center ">
             <About></About>
+          </div>
+          <div className="mt-36 text-center ">
+            <Countup></Countup>
           </div>
           <div className="mt-36 text-center ">
             <Features></Features>
