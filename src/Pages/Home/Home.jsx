@@ -9,6 +9,7 @@ import { useQuery } from "@tanstack/react-query";
 import useHr from "../../Hooks/useHr";
 import useEmployee from "../../Hooks/useEmployee";
 import useUserData from "../../Hooks/useUserData";
+import Features from "./Features";
 
 const Home = () => {
   // for employee
@@ -66,6 +67,9 @@ const Home = () => {
           </div>
           <div className="mt-36 text-center ">
             <About></About>
+          </div>
+          <div className="mt-36 text-center ">
+            <Features></Features>
           </div>
           <div className="text-center mt-32 mb-20">
             <Package></Package>

@@ -21,11 +21,10 @@ const About = () => {
 
           <p className="text-start w-4/5">
             Welcome to AssetFlow, the ultimate solution for businesses aiming to
-            efficiently manage their assets and products. We
-            understand the challenges HR Managers face in tracking and
-            optimizing the use of company assets. Our software is
-            designed to management asset, ensuring that your
-            resources are utilized effectively.
+            efficiently manage their assets and products. We understand the
+            challenges HR Managers face in tracking and optimizing the use of
+            company assets. Our software is designed to management asset,
+            ensuring that your resources are utilized effectively.
           </p>
           <ul className="flex flex-col gap-2 items-start">
             <li className="flex items-center justify-center gap-3">
@@ -50,7 +49,6 @@ const About = () => {
               policies.
             </li>
           </ul>
-         
         </div>
 
         {/* together success */}
@@ -78,7 +76,7 @@ const About = () => {
               <img className="w-16 h-16" src={feature2} alt="" />
               <h1 className="font-semibold">Proven Investment Growth</h1>
             </div>
-            
+
             {/* 3 */}
             <div className="flex items-center justify-center flex-col w-44 py-3 space-y-2 border-4 border-gray-300 hover:border-blue-900">
               <img className="w-16 h-16" src={feature3} alt="" />
