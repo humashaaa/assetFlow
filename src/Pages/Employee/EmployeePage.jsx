@@ -6,13 +6,16 @@ import axios from "axios";
 import { useState } from "react";
 import useAxiosSecure from "../../useAxiosSecure/useAxiosSecure";
 import { Helmet } from "react-helmet-async";
-
+import img from "../../assets/employeeBanner.png";
+const img_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
 const EmployeePage = () => {
   const navigate = useNavigate();
-  const axiosSecure = useAxiosSecure()
+  const axiosSecure = useAxiosSecure();
   const { createUser, updateUser, googleSignIn } = useAuth();
-  const [user, setUser]= useState(null)
-// console.log(role);
+  const [user, setUser] = useState(null);
+  const [image, setImage] = useState(null);
+  // console.log(role);
   const {
     register,
     handleSubmit,
@@ -23,38 +26,36 @@ const EmployeePage = () => {
   const onSubmit = (data) => {
     const { email, password, name, birthDate, photo } = data;
     console.log(data);
-    createUser(email, password).then( async(result) => {
-    if(result.user){
-      setUser({...user, photoURL : photo, displayName: name})
+    createUser(email, password).then(async (result) => {
+      if (result.user) {
+        setUser({ ...user, photoURL: photo, displayName: name });
 
+        updateUser(name, photo).then(async () => {
+          // user set on the database
 
-      updateUser(name, photo).then(async() => {
-        // user set on the database
-  
-            console.log(data);
+          console.log(data);
 
-            const employeeData = {
-              email,
-              password,
-              name,
-              photo, 
-              birthDate,
-              role: 'employee',
-              isJoin: 'false'
-            }
+          const employeeData = {
+            email,
+            password,
+            name,
+            photo,
+            birthDate,
+            role: "employee",
+            isJoin: "false",
+          };
 
-
-
-
-          await  axios.post(`${import.meta.env.VITE_URL}/users`, employeeData).then((res) => {
+          await axios
+            .post(`${import.meta.env.VITE_URL}/users`, employeeData)
+            .then((res) => {
               if (res.data.insertedId) {
                 console.log("employee added");
                 toast.success("employee info updated");
                 navigate("/dashboard");
               }
-            })
             });
-    }
+        });
+      }
 
       console.log(result);
     });
@@ -68,74 +69,76 @@ const EmployeePage = () => {
     if (!/[a-z]/.test(value))
       return "Password must contain at least one lowercase letter";
     return true;
-  };   
-
+  };
 
   const handleSocialLogin = () => {
     googleSignIn().then((result) => {
       console.log(result.user);
       const userInfo = {
-        email : result.user?.email,
+        email: result.user?.email,
         name: result.user?.displayName,
-        role: 'employee'
-      }
-      axiosSecure.post(`/users`, userInfo)
-      .then(res=>{
+        role: "employee",
+      };
+      axiosSecure.post(`/users`, userInfo).then((res) => {
         console.log(res.data);
         navigate("/dashboard");
-      toast.success("Sign in Successfully");
-      })
+        toast.success("Sign in Successfully");
+      });
     });
   };
 
   return (
     <div>
-       <Helmet>
+      <Helmet>
         <title>Join as Employee</title>
       </Helmet>
-      <div className="hero min-h-screen bg-base-200">
-        <div className="hero-content flex-col lg:flex-row-reverse">
-          <div className="card shrink-0 w-full  shadow-2xl bg-base-100">
+      <div className=" ">
+        <div className="relative">
+          <img className="h-full" src={img} alt="" />
+        </div>
+        <div className="absolute top-24 right-20 flex-col lg:flex-row-reverse">
+          <div className="card shrink-0 w-[31rem]  shadow-2xl bg-base-100">
+            <h1 className="text-center text-2xl font-bold mt-10 mb-3">
+              Join As Employee
+            </h1>
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
-              <div className="flex gap-4">
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Full Name</span>
-                  </label>
-                  <input
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Full Name</span>
+                </label>
+                <input
                   {...register("name", { required: true })}
-                    type="text"
-                    placeholder="full name"
-                    className="input input-bordered"
-                    required
-                  />
-                   {errors.name && (
-                <span className="text-sm text-red-500">
-                  This field is required
-                </span>
-              )}
-                </div>
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Email</span>
-                  </label>
-                  <input
-                    type="email"
-                    {...register("email", { required: true })}
-                    placeholder="email"
-                    className="input input-bordered"
-                    required
-                  />
-                   {errors.email && (
-                <span className="text-sm text-red-500">
-                  This field is required
-                </span>
-              )}
-                </div>
+                  type="text"
+                  placeholder="full name"
+                  className="input focus:outline-none input-bordered"
+                  required
+                />
+                {errors.name && (
+                  <span className="text-sm text-red-500">
+                    This field is required
+                  </span>
+                )}
+              </div>
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="email"
+                  {...register("email", { required: true })}
+                  placeholder="email"
+                  className="input focus:outline-none input-bordered"
+                  required
+                />
+                {errors.email && (
+                  <span className="text-sm text-red-500">
+                    This field is required
+                  </span>
+                )}
               </div>
 
               {/* 2nd row */}
-              <div className=" flex justify-between">
+              <div className="flex items-center justify-between ">
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Date of Birth</span>
@@ -144,14 +147,14 @@ const EmployeePage = () => {
                     type="date"
                     {...register("birthDate", { required: true })}
                     placeholder="date of birth"
-                    className="input input-bordered"
+                    className="input w-48 focus:outline-none input-bordered"
                     required
                   />
-                   {errors.birthDate && (
-                <span className="text-sm text-red-500">
-                  This field is required
-                </span>
-              )}
+                  {errors.birthDate && (
+                    <span className="text-sm text-red-500">
+                      This field is required
+                    </span>
+                  )}
                 </div>
 
                 <div className="form-control">
@@ -159,61 +162,68 @@ const EmployeePage = () => {
                     <span className="label-text">Password</span>
                   </label>
                   <input
-                  {...register("password", { validate: validation })}
+                    {...register("password", { validate: validation })}
                     type="password"
                     placeholder="password"
-                    className="input input-bordered"
+                    className="input focus:outline-none input-bordered"
                     required
                   />
-                   {errors.password && (
-                <span className="text-sm text-red-500">
-                  This field is required
-                </span>
-              )}
-                  
+                  {errors.password && (
+                    <span className="text-sm text-red-500">
+                      This field is required
+                    </span>
+                  )}
                 </div>
-
-                
-
-
-
               </div>
 
-              <div className="form-control">
-              <label className="label">
-                <span className="label-text">Photo</span>
-              </label>
+              <div className="form-control w-full my-6">
+                        <input {...register('image', { required: true })} type="file" className="file-input w-full max-w-xs" />
+                    </div>
+
               <input
-              {...register("photo")}
-                type="text"
-                placeholder="photo url"
-                className="input input-bordered"
+                className="btn mt-5 btn-primary bg-blue-500 hover:bg-blue-600 border-none text-white text-xl"
+                type="submit"
+                value="Sign Up!"
               />
-            </div>
-
-            <input
-              className="btn btn-primary bg-blue-400 hover:bg-blue-500 border-none text-white text-xl"
-              type="submit"
-              value="Sign Up!"
-            />
             </form>
-
+<hr />
             {/* socials */}
-            <div className="my-6 space-y-4">
+            <div className="mb-6 mt-7  mx-auto">
               <button
                 onClick={handleSocialLogin}
-                aria-label="Login with Google"
-                type="button"
-                className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-600 focus:dark:ring-violet-600"
+                className="inline-flex  cursor-pointer items-center justify-center whitespace-nowrap rounded-md  border border-blue-600 border-input   h-12  w-[27rem]"
+                type="submit"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32 32"
-                  className="w-5 h-5 fill-current"
-                >
-                  <path d="M16.318 13.714v5.484h9.078c-0.37 2.354-2.745 6.901-9.078 6.901-5.458 0-9.917-4.521-9.917-10.099s4.458-10.099 9.917-10.099c3.109 0 5.193 1.318 6.38 2.464l4.339-4.182c-2.786-2.599-6.396-4.182-10.719-4.182-8.844 0-16 7.151-16 16s7.156 16 16 16c9.234 0 15.365-6.49 15.365-15.635 0-1.052-0.115-1.854-0.255-2.651z"></path>
-                </svg>
-                <p>Login with Google</p>
+                <span className="mr-2">
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    strokeWidth="0"
+                    viewBox="0 0 48 48"
+                    className="h-5 w-5"
+                    height="1em"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      fill="#FFC107"
+                      d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12 c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24 c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"
+                    ></path>
+                    <path
+                      fill="#FF3D00"
+                      d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657 C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"
+                    ></path>
+                    <path
+                      fill="#4CAF50"
+                      d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36 c-5.202,0-9.619-3.317-11.283-7.946l-6.522,5.025C9.505,39.556,16.227,44,24,44z"
+                    ></path>
+                    <path
+                      fill="#1976D2"
+                      d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571 c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
+                    ></path>
+                  </svg>
+                </span>
+                <span className="font-semibold text-xl">Google</span>
               </button>
             </div>
           </div>
