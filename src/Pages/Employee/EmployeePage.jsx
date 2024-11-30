@@ -99,7 +99,7 @@ const EmployeePage = () => {
         <div className="relative">
           <img className="h-full" src={img} alt="" />
         </div>
-        <div className="absolute top-24 right-20 flex-col lg:flex-row-reverse">
+        <div className="absolute top-32 right-20 flex-col lg:flex-row-reverse">
           <div className="card shrink-0 w-[31rem]  shadow-2xl bg-base-100">
             <h1 className="text-center text-2xl font-bold mt-10 mb-3">
               Join As Employee

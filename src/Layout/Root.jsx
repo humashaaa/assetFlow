@@ -5,7 +5,9 @@ import Nav from "../Component/Nav";
 const Root = () => {
     return (
         <div>
+            <div className="">
             <Nav></Nav>
+            </div>
             <div>
                 <Outlet></Outlet>
             </div>

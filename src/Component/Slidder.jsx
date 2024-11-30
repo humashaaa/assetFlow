@@ -9,7 +9,7 @@ import "./homeSlider.css";
 import { Link } from "react-router-dom";
 const Slidder = () => {
   return (
-    <div className="w-full h-[40rem]">
+    <div className="w-full h-[40rem] mt-5">
       <Swiper
         // spaceBetween={30}
         // centeredSlides={true}

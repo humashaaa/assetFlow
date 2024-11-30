@@ -24,29 +24,19 @@ const Nav = () => {
         to="/"
         className={({ isActive }) =>
           isActive
-            ? "text-red-500 text-xl font-bold"
-            : "font-bold text-xl text-blue-500"
+            ? "border-b-2 border-blue-900 text-blue-900 text-xl font-bold"
+            : "font-bold text-xl "
         }
       >
         Home
       </NavLink>
-      <NavLink
-        to="/contact"
-        className={({ isActive }) =>
-          isActive
-            ? "text-red-500 text-xl font-bold"
-            : "font-bold text-xl text-blue-500"
-        }
-      >
-       Contact
-      </NavLink>
-
+      
       <NavLink
         to="/employee"
         className={({ isActive }) =>
           isActive
-            ? "text-red-500 text-xl font-bold"
-            : "font-bold text-xl  text-blue-500"
+            ? "border-b-2 border-blue-900 text-blue-900 text-xl font-bold"
+            : "font-bold text-xl "
         }
       >
         Join as Employee
@@ -55,18 +45,29 @@ const Nav = () => {
         to="/HRmanager"
         className={({ isActive }) =>
           isActive
-            ? "text-red-500 text-xl font-bold"
-            : "font-bold text-xl  text-blue-500"
+            ? "border-b-2 border-blue-900 text-blue-900 text-xl font-bold"
+            : "font-bold text-xl "
         }
       >
         Join as HR Manager
       </NavLink>
+      <NavLink
+        to="/contact"
+        className={({ isActive }) =>
+          isActive
+            ? "border-b-2 border-blue-900 text-blue-900 text-xl font-bold"
+            : "font-bold text-xl "
+        }
+      >
+       Contact
+      </NavLink>
+
     </>
   );
 
   return (
     <div>
-      <div className="navbar bg-base-100">
+      <div className="navbar mb-7 pt-4">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -89,17 +90,24 @@ const Nav = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 flex items-start justify-around"
             >
-              {user ? <><p>AssetFlow</p></> : [navbar]}
+              {user ?<NavLink to="/" className="font-bold text-3xl mb-20">
+              Asset<span className="text-blue-500 ">Flow</span>
+            </NavLink> : [navbar]}
             </ul>
           </div>
-          {/* <a className="btn btn-ghost text-2xl font-extrabold">assetflow</a> */}
-          <a className="btn btn-ghost text-2xl font-extrabold"> {loggedInUser ? loggedInUser.companyName : 'AssetFlow'}</a>
+          
+          <NavLink to="/" className="font-bold text-4xl ">
+              Asset<span className="text-blue-800 ">Flow</span>
+            </NavLink>
         
         </div>
         <div className="navbar-center hidden lg:flex ">
           <ul className="menu menu-horizontal px-1 flex items-center gap-10">
             {user ? <></> : [navbar]}
           </ul>
+
+
+
         </div>
         <div className="navbar-end">
           {loggedInUser ? (
@@ -141,11 +149,12 @@ const Nav = () => {
             </div>
           ) : (
             <Link
-              className="bg-blue-400 md:w-28 w-15 h-10 text-xl btn hover:bg-blue-500 rounded-2xl  text-white font-bold"
+              className="inline-flex items-center w-full px-12 py-3 mb-3 mr-1 text-[17px] font-bold text-white no-underline align-middle bg-blue-600 border border-transparent border-solid rounded-md cursor-pointer select-none sm:mb-0 sm:w-auto hover:bg-blue-700 hover:border-blue-700 hover:text-white focus-within:bg-blue-700 focus-within:border-blue-700"
               to="/login"
             >
               Login
             </Link>
+
           )}
         </div>
       </div>

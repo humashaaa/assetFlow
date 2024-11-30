@@ -6,7 +6,7 @@ const Contact = () => {
   return (
     <div>
       {/* banner */}
-      <div className="about mx-auto">
+      <div className="about mx-auto mt-5">
         <h1 className="font-bold text-6xl text-white text-center">
           Contact us
         </h1>
