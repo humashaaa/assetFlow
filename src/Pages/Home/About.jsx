@@ -14,7 +14,7 @@ const About = () => {
         }
       ></Header>
 
-      <div className="flex items-end justify-center px-20 mt-24 pt-24  gap-6">
+      <div className="flex items-end justify-center px-20 mt-24 pt-24  gap-6"  >
         {/* together success */}
         {/* <div className="flex flex-col items-start justify-start space-y-4">
           <h1 className="font-bold text-2xl">Together success in future</h1>

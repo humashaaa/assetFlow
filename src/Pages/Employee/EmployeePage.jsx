@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useState } from "react";
 import useAxiosSecure from "../../useAxiosSecure/useAxiosSecure";
+
 import { Helmet } from "react-helmet-async";
 import img from "../../assets/employeeBanner.png";
+import { axiosPublic } from "../../useAxiosPublic/useAxiosPublic";
 const img_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
 const EmployeePage = () => {
@@ -87,6 +89,7 @@ const EmployeePage = () => {
     });
   };
 
+
   return (
     <div>
       <Helmet>
@@ -102,6 +105,7 @@ const EmployeePage = () => {
               Join As Employee
             </h1>
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
+              <div className="flex items-center justify-between gap-2 " >
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Full Name</span>
@@ -110,7 +114,7 @@ const EmployeePage = () => {
                   {...register("name", { required: true })}
                   type="text"
                   placeholder="full name"
-                  className="input focus:outline-none input-bordered"
+                  className="input w-48 focus:outline-none input-bordered"
                   required
                 />
                 {errors.name && (
@@ -135,6 +139,7 @@ const EmployeePage = () => {
                     This field is required
                   </span>
                 )}
+              </div>
               </div>
 
               {/* 2nd row */}
@@ -176,9 +181,17 @@ const EmployeePage = () => {
                 </div>
               </div>
 
-              <div className="form-control w-full my-6">
-                        <input {...register('image', { required: true })} type="file" className="file-input w-full max-w-xs" />
-                    </div>
+              <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Photo URL</span>
+                  </label>
+                  <input
+                    {...register("photo")}
+                    type="text"
+                    placeholder="Your Photo URL"
+                    className="input input-bordered"
+                  />
+                </div>
 
               <input
                 className="btn mt-5 btn-primary bg-blue-500 hover:bg-blue-600 border-none text-white text-xl"
@@ -186,7 +199,7 @@ const EmployeePage = () => {
                 value="Sign Up!"
               />
             </form>
-<hr />
+            <hr />
             {/* socials */}
             <div className="mb-6 mt-7  mx-auto">
               <button
