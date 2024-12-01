@@ -127,7 +127,7 @@ const Nav = () => {
                   </button>
                 </li>
                 <li>
-                  <NavLink className="font-semibold" to="/dashboard">
+                  <NavLink className="font-semibold" to="/dashboard/assetList">
                     Dashboard
                   </NavLink>
                 </li>

@@ -19,7 +19,7 @@ const Dashboard = () => {
   return (
     <div className="flex">
       <div className="w-64 min-h-screen bg-[#030C0D] pb-12 flex flex-col items-center justify-between">
-        <ul className=" text-white text-xl space-y-4 font-semibold">
+        <ul className=" text-white mt-9 text-xl space-y-4 font-semibold">
           <li>
             <NavLink to="/" className="font-bold text-4xl mb-20">
               Asset<span className="text-blue-500 ">Flow</span>
@@ -105,7 +105,7 @@ const Dashboard = () => {
           )}
         </ul>
         <div className=" -ml-24">
-          <button onClick={handleLogOut} className="text-white flex items-center justify-start  gap-1 text-xl font-semibold">
+          <button onClick={handleLogOut} className="text-white flex items-center justify-start hover:text-blue-500 gap-1 text-xl font-semibold">
             <RiLogoutBoxRFill /> Logout
           </button>
         </div>

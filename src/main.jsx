@@ -76,7 +76,7 @@ const router = createBrowserRouter([
     ),
     children: [
       {
-        path: "assetList",
+        path: "/dashboard/assetList",
         element: (
           <HrRoute>
             <AssetList></AssetList>

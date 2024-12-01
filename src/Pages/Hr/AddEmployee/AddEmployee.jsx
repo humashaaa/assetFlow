@@ -2,17 +2,14 @@ import { useQuery } from "@tanstack/react-query";
 import { IoPersonAdd } from "react-icons/io5";
 import useAxiosSecure from "../../../useAxiosSecure/useAxiosSecure";
 import useAuth from "../../../Hooks/useAuth";
-// import { useState } from "react";
 import Swal from "sweetalert2";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { useState } from "react";
-import axios from "axios";
 const AddEmployee = () => {
 
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
-const localtion = useLocation()
   // const [users, setUsers] = useState([]);
   const [limit, setLimit] = useState('');
   const navigate = useNavigate()
@@ -42,7 +39,7 @@ const localtion = useLocation()
   // console.log(employees);
 // console.log(user.companyName);
 const [userData] = userss
-let newLimit = userData.limit
+// let newLimit = userData.limit
 
   const handleAdd = (emp) => {
 
@@ -92,7 +89,7 @@ const handleSubmit = async e =>{
       {/* add employee */}
 <div className="flex justify-around items-center">
 <h1 className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Total member {filter.length}</h1>
-<h1 className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Package Limit {newLimit}</h1>
+{/* <h1 className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Package Limit {newLimit}</h1> */}
 {/* <Link to='/increaseForm' className="bg-blue-400 px-2 text-white rounded-full w-36 mx-auto mt-16">Increase Limit</Link> */}
 <form onSubmit={handleSubmit}>
 <div className="form-control ">
