@@ -57,11 +57,13 @@ const AllRequest = () => {
   };
 
   return (
-    <div>
-       <Helmet>
+    <div className="w-[78rem]">
+      <Helmet>
         <title>All Request</title>
       </Helmet>
-      <h1 className="font-bold text-3xl text-center mt-20">All Request</h1>
+      <h1 className="font-bold text-3xl text-blue-950 text-center mt-14 mb-4">
+        All Request
+      </h1>
 
       {/* all request */}
 
@@ -82,16 +84,18 @@ const AllRequest = () => {
                     </th>
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
+                      className="py-3.5 px-3 text-xl font-lora font-bold text-left rtl:text-right"
                     >
                       <div className="flex items-center gap-x-3">
-                        <span>Asset Name</span>
+                        <span className="text-blue-950 text-xl">
+                          Asset Name
+                        </span>
                       </div>
                     </th>
 
                     <th
                       scope="col"
-                      className="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500"
+                      className="py-3.5 px-3 text-xl font-lora font-bold text-left rtl:text-right"
                     >
                       <div className="flex items-center gap-x-3">
                         <span>Asset Type</span>
@@ -100,14 +104,14 @@ const AllRequest = () => {
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                      className="py-3.5 px-3 text-xl font-lora font-bold text-left rtl:text-right"
                     >
                       <span>Email of requester</span>
                     </th>
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                      className="py-3.5 px-3 text-xl font-lora font-bold text-left rtl:text-right"
                     >
                       <button className="flex items-center gap-x-2">
                         <span>Name of requester</span>
@@ -116,26 +120,24 @@ const AllRequest = () => {
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                      className="py-3.5 px-3 text-xl font-lora font-bold text-left rtl:text-right"
                     >
                       Request Date
                     </th>
 
                     <th
                       scope="col"
-                      className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500"
+                      className="py-3.5 px-3 text-xl font-lora font-bold text-left rtl:text-right"
                     >
                       Additional note
                     </th>
 
-                    <th className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
+                    <th className="py-3.5 px-3 text-xl font-lora font-bold text-left rtl:text-right">
                       Status
                     </th>
-                    <th className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                      Approve Button
-                    </th>
-                    <th className="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500">
-                      Reject Button
+
+                    <th className="py-3.5 px-3 text-xl font-lora font-bold text-left rtl:text-right">
+                      Action
                     </th>
                   </tr>
                 </thead>
@@ -176,7 +178,7 @@ const AllRequest = () => {
                           </button>
                         </td>
                         <td className="px-4 py-4 text-sm whitespace-nowrap">
-                          <button onClick={()=>handleReject(asset)}>
+                          <button onClick={() => handleReject(asset)}>
                             <IoIosRemoveCircle />
                           </button>
                         </td>
