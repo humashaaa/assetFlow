@@ -45,13 +45,13 @@ const AddAsset = () => {
        <Helmet>
         <title> Add Asset </title>
       </Helmet>
-      <h1 className="text-center font-bold text-4xl ">Add Asset</h1>
+      <h1 className="text-center font-bold text-blue-950 text-4xl ">Add Asset</h1>
 
       {/* form */}
       <div className="flex items-center justify-center mt-20">
-        <form onSubmit={handleFormSubmit}>
+        <form onSubmit={handleFormSubmit} className="space-y-3">
           {/* row 1 */}
-          <div className="flex gap-6">
+          <div className="flex ">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Product Name</span>
@@ -60,24 +60,17 @@ const AddAsset = () => {
                 type="text"
                 placeholder="Product Name"
                 name="productName"
-                className="input input-bordered"
+                className="input input-bordered w-96"
                 required
               />
             </div>
 
-            <select
-              name='productType'
-              id='productType'
-              className='border p-1 rounded-lg'
-            >
-              <option value=''>Select Product Type</option>
-              <option value='returnable'>Returnable</option>
-              <option value='non-returnable'>Non-returnable</option>
-            </select>
+           
           </div>
           {/* 2nd row */}
 
-          <div className="form-control">
+        <div className="flex gap-3">
+        <div className="form-control ">
             <label className="label">
               <span className="label-text">Product Quantity</span>
             </label>
@@ -85,11 +78,28 @@ const AddAsset = () => {
               type="text"
               placeholder="Product Quantity"
               name="productQuantity"
-              className="input input-bordered"
+              className="input input-bordered "
               required
             />
           </div>
-          <div className="form-control">
+         <div className=" flex items-end">
+         <select
+              name='productType'
+              id='productType'
+              className='border h-12  rounded-lg'
+            >
+              <option value=''>Select Product Type</option>
+              <option value='returnable'>Returnable</option>
+              <option value='non-returnable'>Non-returnable</option>
+            </select>
+         </div>
+        </div>
+
+
+
+
+
+          <div className="form-control ">
             <label className="label">
               <span className="label-text">Asset Policy Docs (if any)</span>
             </label>
@@ -101,8 +111,8 @@ const AddAsset = () => {
               accept="pdf/*"
             />
           </div>
-          <div className="form-control mt-6">
-            <button className="btn btn-primary">Add</button>
+          <div className="form-control  ">
+            <button className="btn btn-primary mt-5">Add</button>
           </div>
         </form>
       </div>
