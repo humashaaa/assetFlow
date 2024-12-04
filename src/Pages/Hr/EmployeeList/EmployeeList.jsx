@@ -23,7 +23,7 @@ const EmployeeList = () => {
         axiosSecure.patch(`/users/${emp._id}/remove`).then((res) => {
           console.log(res.data);
           if (res.data.modifiedCount > 0) {
-            refetch();
+            refetch()
             Swal.fire({
               title: "Removed!",
               text: `${emp.name} is Removed from Your Team `,
