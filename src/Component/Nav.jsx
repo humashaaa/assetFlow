@@ -64,7 +64,7 @@ const Nav = () => {
   );
 
   return (
-    <div className="2xl:px-11 lg:mt-2 lg:px-4">
+    <div className="2xl:px-11 lg:mt-2 xl:px-4">
       <div className="navbar mb-7 pt-4">
         <div className="navbar-start">
           <div className="dropdown">
@@ -89,7 +89,7 @@ const Nav = () => {
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 flex items-start justify-around"
             >
               {user ? (
-                <NavLink to="/" className="font-bold xl:text-3xl mb-20">
+                <NavLink to="/" className="font-bold lg:text-3xl mb-20">
                   Asset<span className="text-blue-500 ">Flow</span>
                 </NavLink>
               ) : (
@@ -97,7 +97,6 @@ const Nav = () => {
               )}
             </ul>
           </div>
-
           <NavLink to="/" className="font-bold text-4xl ">
             Asset<span className="text-blue-800 ">Flow</span>
           </NavLink>
